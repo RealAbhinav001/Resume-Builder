@@ -11,7 +11,9 @@ const Navbar = () => {
         <Link to="/resume">
           <button className="resume">Resume</button>
         </Link>
-        <button className="score">Score</button>
+        <Link to="/ats">
+          <button className="score">Score</button>
+        </Link>
       </div>
     </div>
   );
