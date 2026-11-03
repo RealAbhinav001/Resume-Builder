@@ -136,6 +136,24 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  // Returns { score, matched, missing, totalKeywords }. Throws an Error with the server's message on failure.
+  const checkAtsScore = async (jobDescription) => {
+    try {
+      const response = await axios.post(`${url}/api/resume/ats`, {
+        jobDescription,
+        userData,
+        points,
+        certi,
+      });
+      return response.data.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        "Couldn't reach the server. Check that the backend is running and try again.";
+      throw new Error(message);
+    }
+  };
+
   const contextValue = {
     userData,
     setUserData,
@@ -147,6 +165,7 @@ const UserContextProvider = ({ children }) => {
     points,
     generatePoints,
     certi,
+    checkAtsScore,
   };
 
   return (

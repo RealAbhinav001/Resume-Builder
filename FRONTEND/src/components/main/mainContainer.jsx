@@ -15,7 +15,9 @@ const Main = () => {
         <Link to="/resume">
           <button>Resume</button>
         </Link>
-        <button>ATS</button>
+        <Link to="/ats">
+          <button>ATS</button>
+        </Link>
       </div>
     </div>
   );
