@@ -1,270 +1,311 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Roboto Condensed";
-}
-
-.resumeContainer {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  background-color: #95a5a6;
-  gap: 10px;
-  position: relative;
-}
-
-.pdf {
-  position: absolute;
-  z-index: 99;
-  right: 2%;
-  top: 2%;
-  height: 30px;
-  padding: 0 15px;
-  background-color: #0984e3;
-  color: #fff;
-  outline: none;
-  border: 1px solid black;
-  cursor: pointer;
-}
-
-.pdf:disabled {
-  opacity: 0.7;
-  cursor: wait;
-}
-
-.pdf.reset {
-  right: calc(2% + 120px);
-  background-color: #fff;
-  color: #2d3436;
-}
-
-.resumeContainer .formContainer {
-  width: 50%;
-  background-color: #fff;
-  height: 100vh;
+.builder {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.resumeContainer .formContainer .title {
-  padding: 20px;
+.builderBody {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(380px, 1fr) minmax(0, 1.05fr);
+  min-height: 0;
 }
 
-.resumeContainer .formContainer .title h2 {
-  font-size: 3vw;
-  color: #0984e3;
+/* Grid items default to min-width: auto, so the nowrap step tabs would widen the column past the screen. */
+.builderBody > * {
+  min-width: 0;
 }
 
-.resumeContainer .formContainer .info {
+/* ---------- Editor (left) ---------- */
+.editor {
   display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border-right: 1px solid var(--line);
+  height: calc(100vh - var(--header-h));
+  position: sticky;
+  top: var(--header-h);
 }
 
-.resumeContainer .formContainer .btnContainer {
-  width: 100%;
+.stepper {
+  display: flex;
+  gap: 4px;
+  padding: 14px clamp(16px, 3vw, 32px) 0;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+}
+
+.stepTab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.stepTab:hover {
+  color: var(--ink);
+}
+
+.stepNumber {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  font-size: 0.75rem;
+}
+
+.stepTab.isActive {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.stepTab.isDone .stepNumber {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.editorHead {
+  padding: 24px clamp(16px, 3vw, 32px) 4px;
+}
+
+.editorHead h1 {
+  font-size: 1.6rem;
+}
+
+.editorHead p {
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.editorForm {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px clamp(16px, 3vw, 32px) 24px;
+}
+
+.editorNav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 50px;
+  gap: 12px;
+  padding: 14px clamp(16px, 3vw, 32px);
+  border-top: 1px solid var(--line);
+  background: var(--paper);
 }
 
-.resumeContainer .formContainer .btnContainer button {
-  padding: 20px 40px;
-  height: 60px;
-  background-color: #0984e3;
-  outline: none;
-  border: none;
-  text-align: center;
-  border-radius: 20px;
-  color: #fff;
-  cursor: pointer;
+.editorProgress {
+  color: var(--muted);
+  font-size: 0.875rem;
 }
 
-.resumeContainer .previewContainer {
-  width: 50%;
-  height: 100vh;
-  overflow-y: scroll;
+/* Shared blocks used by the step forms. */
+.formStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.resumeContainer .previewContainer .liveContainer {
-  width: 100%;
-  height: auto;
-  background-color: #fff;
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fbfcfd;
 }
 
-.resumeContainer .previewContainer .liveContainer .headContainer {
-  width: 100%;
+.entryHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.entryHead h3 {
+  font-size: 1rem;
+}
+
+.entryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.groupTitle {
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+/* ---------- Preview (right) ---------- */
+.previewPane {
+  padding: 24px clamp(16px, 3vw, 40px) 48px;
+  overflow-x: hidden;
+}
+
+.previewLabel {
+  max-width: 720px;
+  margin: 0 auto 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* The paper mirrors the PDF template (Roboto Condensed, single column). */
+.paper {
+  max-width: 720px;
+  min-height: 900px;
+  margin: 0 auto;
+  padding: 44px 48px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(23, 32, 43, 0.05), 0 20px 40px -24px rgba(23, 32, 43, 0.25);
+  font-family: var(--font-resume);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #111;
+}
+
+.paper a {
+  color: #111;
+  font-weight: 600;
+}
+
+.paperEmpty {
+  height: 100%;
+  min-height: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  text-align: center;
 }
 
-.resumeContainer .previewContainer .liveContainer .headContainer .personalInfo {
+.paperEmpty p:first-child {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.rHead {
+  text-align: center;
+}
+
+.rName {
+  font-family: var(--font-resume);
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.rContact {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 16px;
+  margin-top: 4px;
+}
+
+.rSection {
+  margin-top: 20px;
+}
+
+.rSection h3 {
+  font-family: var(--font-resume);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+  border-bottom: 1.5px solid #111;
+}
+
+.rSection p + p {
+  margin-top: 2px;
+}
+
+.rItem + .rItem {
+  margin-top: 12px;
+}
+
+.rItemTitle {
+  display: flex;
+  align-items: baseline;
   gap: 10px;
+  font-weight: 700;
 }
 
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .headContainer
-  .personalInfo
-  h2 {
-  font-size: 1vw;
-  font-weight: 600;
+.rItemTitle a {
+  font-size: 0.85rem;
 }
 
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .headContainer
-  .personalInfo
-  a {
-  text-decoration: none;
-  color: black;
-  font-weight: 600;
+.rItem ul {
+  padding-left: 20px;
+  margin: 4px 0;
 }
 
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .headContainer
-  .projectContainer {
-  display: flex;
-  gap: 10px;
+.rPending {
+  color: #8a929c;
+  font-style: italic;
 }
 
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .headContainer
-  .projectContainer
-  a {
-  text-decoration: none;
-  font-weight: 600;
-  color: black;
-}
-
-.resumeContainer .previewContainer .liveContainer .skill .userSkill {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.resumeContainer .previewContainer .liveContainer .skill .userSkill h2 {
-  font-size: 1.2vw;
-  font-weight: 600;
-}
-
-.resumeContainer .previewContainer .liveContainer .project {
-  margin-top: 15px;
-}
-
-.resumeContainer .previewContainer .liveContainer .project .userProject {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px 20px;
-}
-
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .project
-  .userProject
-  .userProjectContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.resumeContainer .previewContainer .liveContainer .project .userProject,
-.userProjectContainer h2 {
-  font-size: 1.2vw;
-}
-
-.resumeContainer .previewContainer .liveContainer .project .userProject ul li {
-  list-style: disc;
-  font-size: 1.2vw;
-  font-weight: 600;
-}
-
-.resumeContainer .previewContainer .liveContainer .project .userProject a {
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.resumeContainer .previewContainer .liveContainer .certificate {
-  margin-top: 15px;
-}
-
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .certificate
-  .userCertificate {
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .certificate
-  .userCertificate
-  h2 {
-  font-size: 1.3vw;
-  font-weight: 600;
-}
-
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .certificate
-  .userCertificate
-  a {
-  text-decoration: none;
-  color: black;
-  font-weight: 600;
-}
-
-.resumeContainer .previewContainer .liveContainer .education {
-  margin-top: 15px;
-}
-
-.resumeContainer .previewContainer .liveContainer .education .userEducation {
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .education
-  .userEducation
-  .collageGrade,
-.seniorGrade,
-.higherGrade {
+.rRow {
   display: flex;
   justify-content: space-between;
+  gap: 16px;
 }
 
-.resumeContainer
-  .previewContainer
-  .liveContainer
-  .education
-  .userEducation
-  .collageGrade
-  h2,
-.seniorGrade h2,
-.higherGrade h2 {
-  font-size: 1.3vw;
+.rRow + .rRow {
+  margin-top: 10px;
+}
+
+.rGrade {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ---------- Small screens: stack editor above preview ---------- */
+@media (max-width: 960px) {
+  .builderBody {
+    grid-template-columns: 1fr;
+  }
+  .editor {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .editorForm {
+    overflow: visible;
+  }
+  .paper {
+    min-height: 0;
+    padding: 28px 24px;
+  }
+  .paperEmpty {
+    min-height: 240px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hideOnPhone {
+    display: none;
+  }
+  .editorProgress {
+    display: none;
+  }
 }

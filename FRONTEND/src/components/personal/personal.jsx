@@ -5,53 +5,75 @@ import { useContext } from "react";
 const Personal = () => {
   const { userData, handleChange } = useContext(UserContext);
   return (
-    <div className="personalinfoContainer">
-      <div className="name-container twoInfo">
-        <input
-          name="firstName"
-          value={userData.firstName}
-          type="text"
-          placeholder="First Name"
-          onChange={handleChange}
-        />
-        <input
-          name="lastName"
-          value={userData.lastName}
-          type="text"
-          placeholder="Last Name"
-          onChange={handleChange}
-        />
+    <div className="formStack">
+      <div className="field-row">
+        <label className="field">
+          <span>First name</span>
+          <input
+            name="firstName"
+            value={userData.firstName}
+            type="text"
+            autoComplete="given-name"
+            placeholder="Priya"
+            onChange={handleChange}
+          />
+        </label>
+        <label className="field">
+          <span>Last name</span>
+          <input
+            name="lastName"
+            value={userData.lastName}
+            type="text"
+            autoComplete="family-name"
+            placeholder="Sharma"
+            onChange={handleChange}
+          />
+        </label>
       </div>
-      <div className="otherInfo">
-        <input
-          name="gmail"
-          value={userData.gmail}
-          type="text"
-          placeholder="Gmail Here"
-          onChange={handleChange}
-        />
-        <input
-          name="phoneNumber"
-          value={userData.phoneNumber}
-          type="number"
-          placeholder="Phone Number"
-          onChange={handleChange}
-        />
+      <div className="field-row">
+        <label className="field">
+          <span>Email</span>
+          <input
+            name="gmail"
+            value={userData.gmail}
+            type="email"
+            autoComplete="email"
+            placeholder="priya.sharma@gmail.com"
+            onChange={handleChange}
+          />
+        </label>
+        <label className="field">
+          <span>Phone number</span>
+          <input
+            name="phoneNumber"
+            value={userData.phoneNumber}
+            type="tel"
+            autoComplete="tel"
+            placeholder="98765 43210"
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <label className="field">
+        <span>GitHub profile</span>
         <input
           name="gitHub"
           value={userData.gitHub}
-          type="text"
-          placeholder="GitHub Link"
+          type="url"
+          placeholder="https://github.com/your-username"
           onChange={handleChange}
         />
+      </label>
+      <label className="field">
+        <span>LinkedIn profile</span>
         <input
           name="linkedin"
           value={userData.linkedin}
-          type="text"
-          placeholder="Linkedin"
+          type="url"
+          placeholder="https://linkedin.com/in/your-name"
           onChange={handleChange}
         />
-      </div>
+      </label>
     </div>
   );
 };
