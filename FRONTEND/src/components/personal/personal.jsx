@@ -1,9 +1,9 @@
-import "./Personal.css";
+import "./personal.css";
 import { UserContext } from "../../context/userInfo";
 import { useContext } from "react";
 
 const Personal = () => {
-  const { userData, setUserData, handleChange } = useContext(UserContext);
+  const { userData, handleChange } = useContext(UserContext);
   return (
     <div className="personalinfoContainer">
       <div className="name-container twoInfo">

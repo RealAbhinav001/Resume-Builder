@@ -1,10 +1,16 @@
 import "./certificate.css";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../context/userInfo";
 
 const Certificate = () => {
-  const { userData, handleCertificateChange, setUserData, generatePoints } =
-    useContext(UserContext);
+  const {
+    userData,
+    handleCertificateChange,
+    setUserData,
+    generatePoints,
+    generating,
+    removeLastCertificate,
+  } = useContext(UserContext);
 
   const addCertificate = () => {
     const newCertificate = {
@@ -18,16 +24,6 @@ const Certificate = () => {
     }));
   };
 
-  const deleteCertificate = () => {
-    if (userData.aboutCertificate.length > 1) {
-      const updatedCerti = [...userData.aboutCertificate];
-      updatedCerti.pop();
-      setUserData((prev) => ({
-        ...prev,
-        aboutCertificate: updatedCerti,
-      }));
-    }
-  };
   return (
     <div className="certificateContainer">
       {userData.aboutCertificate.map((item, key) => {
@@ -47,11 +43,12 @@ const Certificate = () => {
               onChange={(e) => handleCertificateChange(e, key)}
             ></textarea>
             <button
+              disabled={generating !== null}
               onClick={() => {
                 generatePoints(key, "certificate");
               }}
             >
-              Generate Description
+              {generating === `certificate-${key}` ? "Generating..." : "Generate Description"}
             </button>
             <input
               name="certificateLink"
@@ -66,7 +63,7 @@ const Certificate = () => {
       <div className="certificateButton">
         <button onClick={addCertificate}>Add Certificate</button>
 
-        <button onClick={deleteCertificate}>Delete Certificate</button>
+        <button onClick={removeLastCertificate}>Delete Certificate</button>
       </div>
     </div>
   );

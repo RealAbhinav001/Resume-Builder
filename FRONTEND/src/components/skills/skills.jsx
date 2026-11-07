@@ -1,15 +1,16 @@
 import "./skills.css";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../context/userInfo";
 
 const Skill = () => {
-  const [projects, setProject] = useState([1]);
   const {
     userData,
     handleChange,
     handleProjectChange,
     setUserData,
     generatePoints,
+    generating,
+    removeLastProject,
   } = useContext(UserContext);
 
   const addProject = () => {
@@ -25,16 +26,6 @@ const Skill = () => {
     }));
   };
 
-  const deleteProject = () => {
-    if (userData.aboutProject.length > 1) {
-      const updatedabout = [...userData.aboutProject];
-      updatedabout.pop();
-      setUserData((prev) => ({
-        ...prev,
-        aboutProject: updatedabout,
-      }));
-    }
-  };
   return (
     <div className="skillContainer">
       <input
@@ -72,11 +63,12 @@ const Skill = () => {
               }}
             ></textarea>
             <button
+              disabled={generating !== null}
               onClick={() => {
                 generatePoints(index);
               }}
             >
-              Generate Points
+              {generating === `description-${index}` ? "Generating..." : "Generate Points"}
             </button>
             <input
               name="techUsed"
@@ -101,7 +93,7 @@ const Skill = () => {
       })}
       <div className="buttonContainer">
         <button onClick={addProject}>Add Project</button>
-        <button onClick={deleteProject}>Delet Project</button>
+        <button onClick={removeLastProject}>Delete Project</button>
       </div>
     </div>
   );
