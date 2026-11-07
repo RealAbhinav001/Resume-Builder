@@ -1,2 +1,8 @@
-node_modules,
+# Dependencies (reinstall with npm install)
+node_modules/
+
+# Secrets: never commit. Copy .env.example to .env instead.
 .env
+
+# Logs
+*.log
