@@ -1,13 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Mogra&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Mogra;
-}
-
 .home {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+}
+
+.homeFooter {
+  margin-top: auto;
+  padding: 28px clamp(16px, 4vw, 40px);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.875rem;
 }

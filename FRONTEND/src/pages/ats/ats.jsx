@@ -35,14 +35,14 @@ const Ats = () => {
 
   return (
     <div className="atsContainer">
-      <div className="atsHeader">
-        <Link to="/" className="atsBrand">
+      <header className="topbar">
+        <Link to="/" className="brand">
           Built-It
         </Link>
-        <Link to="/resume">
-          <button className="atsSecondary">Edit resume</button>
+        <Link to="/resume" className="btn btn-secondary btn-small">
+          Edit resume
         </Link>
-      </div>
+      </header>
 
       <div className="atsBody">
         <section className="atsCard">
@@ -65,7 +65,7 @@ const Ats = () => {
             rows={12}
           />
           {error && <p className="atsError">{error}</p>}
-          <button className="atsPrimary" onClick={handleCheck} disabled={loading}>
+          <button className="btn btn-primary atsPrimary" onClick={handleCheck} disabled={loading}>
             {loading ? "Checking..." : "Check score"}
           </button>
         </section>

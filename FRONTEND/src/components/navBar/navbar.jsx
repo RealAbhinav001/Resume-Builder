@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="nav-container">
-      <div className="intro">
-        <h2>Built-It</h2>
-      </div>
-      <div className="build-btns">
-        <Link to="/resume">
-          <button className="resume">Resume</button>
+    <header className="topbar">
+      <Link to="/" className="brand">
+        Built-It
+      </Link>
+      <nav className="topbar-actions" aria-label="Main">
+        <Link to="/ats" className="btn btn-ghost">
+          Check ATS score
         </Link>
-        <Link to="/ats">
-          <button className="score">Score</button>
+        <Link to="/resume" className="btn btn-primary">
+          Build my resume
         </Link>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 

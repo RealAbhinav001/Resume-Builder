@@ -1,29 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 25px;
-}
-
-.nav-container .intro h2 {
-  font-size: 3vw;
-  color: #f1c40f;
-}
-
-.nav-container .build-btns {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-container .build-btns button {
-  padding: 15px;
-  border-radius: 25px;
-  cursor: pointer;
-  border: 2px solid black;
-  font-size: 1vw;
+/* The top bar uses the shared .topbar / .brand / .btn styles from index.css. */
+@media (max-width: 480px) {
+  .topbar .btn-ghost {
+    display: none;
+  }
 }

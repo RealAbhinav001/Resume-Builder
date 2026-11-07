@@ -7,6 +7,9 @@ const Home = () => {
     <div className="home">
       <Navbar />
       <Main />
+      <footer className="homeFooter">
+        <p>Built-It: an AI resume builder made with React, Express, OpenAI and Puppeteer.</p>
+      </footer>
     </div>
   );
 };
