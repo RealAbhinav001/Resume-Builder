@@ -7,11 +7,9 @@ import Education from "../../components/Education/education";
 import { UserContext } from "../../context/userInfo";
 
 const Resume = () => {
-  const { userData, sendData, generatePoints, points, certi } =
+  const { userData, sendData, downloading, resetResume, points, certi } =
     useContext(UserContext);
   const [count, setCount] = useState(0);
-  console.log(points);
-  console.log(userData);
   const step = [
     {
       name: "Personal",
@@ -33,20 +31,28 @@ const Resume = () => {
   const handleNext = () => {
     if (count < step.length - 1) {
       setCount(count + 1);
-      console.log("Button Click");
     }
   };
 
   const handleBack = () => {
     if (count >= 1) {
       setCount(count - 1);
-      console.log("back Click");
+    }
+  };
+
+  const handleReset = () => {
+    if (window.confirm("Clear everything and start a new resume?")) {
+      resetResume();
+      setCount(0);
     }
   };
   return (
     <div className="resumeContainer">
-      <button className="pdf" onClick={sendData}>
-        Download
+      <button className="pdf" onClick={sendData} disabled={downloading}>
+        {downloading ? "Preparing PDF..." : "Download"}
+      </button>
+      <button className="pdf reset" onClick={handleReset}>
+        Start Over
       </button>
       <div className="formContainer">
         <div className="title">

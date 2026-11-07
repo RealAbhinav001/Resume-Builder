@@ -98,9 +98,26 @@ The page also checks the 30-character minimum before calling the API, and shows 
 
 ## Running locally
 
+1. Copy `BACKEND/.env.example` to `BACKEND/.env` and add your OpenAI key.
+2. Optionally copy `FRONTEND/.env.example` to `FRONTEND/.env`.
+3. Start both:
+
 ```bash
-cd BACKEND && npm install && node server.js        # needs OPEN_API_KEY in BACKEND/.env for AI bullets
+cd BACKEND && npm install && node server.js
 cd FRONTEND && npm install && npm run dev
 ```
 
-The frontend calls the API at `http://localhost:4000` (hard-coded in `context/userInfo.jsx`; moving it to an environment variable is planned).
+## Configuration (environment variables)
+
+| Variable | Where | Used for | Default |
+|---|---|---|---|
+| `OPEN_API_KEY` | `BACKEND/.env` | OpenAI calls for AI bullets | none (required for AI bullets) |
+| `PORT` | `BACKEND/.env` | the port the server listens on | `4000` |
+| `VITE_API_URL` | `FRONTEND/.env` | the backend address the browser calls | `http://localhost:4000` in development only |
+
+- **The backend** loads `BACKEND/.env` once, at the top of `server.js` (`import "dotenv/config"`), before any other module reads `process.env`. Hosting platforms set `PORT` themselves.
+- **The frontend** reads `import.meta.env.VITE_API_URL`. Vite only exposes variables that start with `VITE_`, and it writes their values **into the built JavaScript at build time**. So:
+  - set `VITE_API_URL` in the hosting platform **before building**; changing it later needs a new build
+  - never put a secret in a `VITE_` variable, because anyone can read it in the browser
+- **Without `VITE_API_URL`,** a production build calls the site's own origin instead of `localhost`, so a missing setting fails visibly instead of quietly calling the visitor's own computer.
+- `.env` files are git-ignored; the `.env.example` files are committed as templates.
